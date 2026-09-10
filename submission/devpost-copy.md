@@ -22,7 +22,7 @@ HomeOps Agent is intentionally conservative. It never unlocks doors automaticall
 
 ## Built With
 
-Python, JavaScript, HTML, CSS, simulated device tools, and a Strands-ready agent/tool architecture. Final submission will wire the existing adapter to the Strands Agents SDK.
+Python, JavaScript, HTML, CSS, simulated device tools, and the Strands Agents SDK using the official `Agent` and `@tool` interfaces.
 
 ## Testing Instructions
 

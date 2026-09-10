@@ -42,11 +42,23 @@ Then open:
 http://localhost:4173
 ```
 
+Run the deterministic agent simulation:
+
+```bash
+PYTHONPATH=src python -m homeops_agent.cli --scenario fix-needed
+```
+
+Verify the Strands agent object can be built after installing dependencies:
+
+```bash
+PYTHONPATH=src python -m homeops_agent.cli --build-strands-agent
+```
+
 ## Strands Integration
 
-The MVP keeps agent tools isolated in `src/homeops_agent/tools.py` and the Good Night Check policy in `src/homeops_agent/agent.py`. `src/homeops_agent/strands_adapter.py` is the handoff point for the Strands Agents SDK.
+The MVP keeps agent tools isolated in `src/homeops_agent/tools.py` and the Good Night Check policy in `src/homeops_agent/agent.py`. `src/homeops_agent/strands_adapter.py` uses the official Strands `Agent` and `@tool` interfaces.
 
-Strands is not vendored into this repo. Before final submission, install the SDK in your environment and replace the adapter stub with the official Strands `Agent` and tool decorators while preserving the same tool contracts and safety policy.
+The local web demo stays deterministic so judges can reliably see the safety behavior. The Strands entrypoint is ready for model-backed execution once AWS Bedrock or another model provider is configured.
 
 ## Simulated vs. Real Integrations
 
@@ -59,7 +71,8 @@ Current demo state is simulated so the judging walkthrough is reliable. One real
 - [x] MIT license
 - [x] Architecture diagram draft
 - [x] Good Night Check local demo
-- [ ] Strands SDK installed and wired to adapter
+- [x] Strands SDK installed locally and wired to adapter
+- [ ] Model provider credentials configured for live Strands invocation
 - [ ] Public demo video under five minutes
 - [ ] AWS Builder ID
 - [ ] Devpost submission before September 14, 2026 at 8:00 PM ET
