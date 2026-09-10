@@ -28,12 +28,21 @@ const actionLabels = {
   confirm_idle: "Confirmed Fire TV is idle",
 };
 
+const deviceLabels = {
+  lock: "Security",
+  light: "Lighting",
+  outlet: "Power",
+  media: "Media",
+  speaker_group: "Audio",
+};
+
 const devicesEl = document.querySelector("#devices");
 const actionsEl = document.querySelector("#actions");
 const approvalsEl = document.querySelector("#approvals");
 const auditEl = document.querySelector("#audit");
 const summaryEl = document.querySelector("#summary");
 const scenarioEl = document.querySelector("#scenario");
+const auditCountEl = document.querySelector("#audit-count");
 
 function cloneScenario() {
   return JSON.parse(JSON.stringify(scenarios[scenarioEl.value]));
@@ -90,7 +99,7 @@ function render(devices, actions = [], approvals = [], log = []) {
   devicesEl.innerHTML = Object.values(devices)
     .map((device) => `<div class="card ${device.status === "unknown" ? "warn" : ""}">
       <span class="device-name">${device.name}</span>
-      <span class="muted">${device.kind} · ${device.status}</span>
+      <span class="muted">${deviceLabels[device.kind]} · ${device.status}</span>
     </div>`)
     .join("");
 
@@ -110,6 +119,7 @@ function render(devices, actions = [], approvals = [], log = []) {
     : "Audit events will appear here.";
 
   summaryEl.textContent = approvals.length ? "Good Night Check complete with human review required." : "Good Night Check complete.";
+  auditCountEl.textContent = `${log.length} ${log.length === 1 ? "event" : "events"}`;
 }
 
 scenarioEl.addEventListener("change", () => {

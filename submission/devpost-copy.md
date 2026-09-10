@@ -10,11 +10,11 @@ https://github.com/AjaneeI/homeops-agent
 
 ## Short Description
 
-HomeOps Agent coordinates a mixed smart home by checking device state, completing low-risk routine actions, and escalating safety-sensitive decisions to the human.
+HomeOps Agent is an operations layer for a mixed smart home: it checks device state, completes low-risk routine actions, and escalates safety-sensitive decisions to the human.
 
 ## Inspiration
 
-Smart homes are useful, but they can become fragmented across routines, apps, devices, and voice commands. HomeOps Agent explores what happens when the home has an operations layer: one agent that checks the current state, handles routine fixes, and keeps people in control of consequential decisions.
+Smart homes are useful, but they can become fragmented across routines, apps, devices, and voice commands. HomeOps Agent explores what happens when the home has an operations layer instead of another remote: one agent that checks the current state, handles routine fixes, and keeps people in control of consequential decisions.
 
 ## What It Does
 

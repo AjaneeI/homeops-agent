@@ -1,12 +1,12 @@
 # HomeOps Agent
 
-HomeOps Agent coordinates a mixed smart home by checking device state, completing low-risk routine actions, and escalating safety-sensitive decisions to the human.
+HomeOps Agent is not a smart-home remote. It is an operations layer for the home: it checks device state, completes low-risk routine actions, and escalates safety-sensitive decisions to the human.
 
 This hackathon MVP focuses on one polished scenario: **Good Night Check**. It uses a Strands-ready agent shape with explicit tools, simulated smart-home devices, an approval gate, and an audit trail.
 
 ## Why It Matters
 
-Smart homes often become a pile of separate routines, apps, and voice commands. HomeOps Agent treats the home like an operations system: it checks current state first, takes safe routine actions, and keeps humans in control of decisions involving access, locks, or uncertainty.
+Smart homes often become a pile of separate routines, apps, and voice commands. HomeOps Agent treats the home like an operations system: it checks what is true now, fixes routine issues quietly, and keeps humans in control of decisions involving access, locks, or uncertainty.
 
 ## MVP Demo
 

@@ -9,17 +9,30 @@
   <body>
     <main class="app">
       <header class="topbar">
-        <div>
+        <div class="hero-copy">
           <p class="eyebrow">Agents for Humans Hackathon</p>
-          <h1>HomeOps Agent</h1>
-          <p class="lede">A calm operations layer for a mixed smart home: routine fixes happen quietly, security decisions stay with you.</p>
+          <h1>Not a remote. An operations layer for the home.</h1>
+          <p class="lede">HomeOps Agent checks the messy state of a real smart home, fixes the low-risk routine stuff, and stops when judgment belongs to a person.</p>
+          <div class="signal-row" aria-label="Project signals">
+            <span>Strands Agent</span>
+            <span>Simulation-first</span>
+            <span>Safety-gated</span>
+          </div>
         </div>
-        <button id="run-check" type="button">Run Good Night Check</button>
+        <div class="hero-panel" aria-label="HomeOps agent status">
+          <span class="panel-kicker">Tonight's runbook</span>
+          <strong>Good Night Check</strong>
+          <p>Check lock, dim bedroom light, turn off outlet, confirm media idle, write audit trail.</p>
+          <button id="run-check" type="button">Run Good Night Check</button>
+        </div>
       </header>
 
       <section class="console">
         <div class="control-row" aria-label="Demo scenarios">
-          <label for="scenario">Scenario</label>
+          <div>
+            <label for="scenario">Scenario</label>
+            <p>Choose the situation, then let the agent decide what it can safely do.</p>
+          </div>
           <select id="scenario">
             <option value="all-clear">All clear</option>
             <option value="fix-needed" selected>Outlet/light fix needed</option>
@@ -40,11 +53,33 @@
             <span class="label">Mode</span>
             <strong>Good Night Check</strong>
           </div>
+          <div>
+            <span class="label">Audit posture</span>
+            <strong id="audit-count">0 events</strong>
+          </div>
         </section>
       </section>
 
+      <section class="flow" aria-label="Agent flow">
+        <div class="flow-step active">
+          <span>01</span>
+          <strong>Read state</strong>
+          <p>Ask every device what is true now.</p>
+        </div>
+        <div class="flow-step">
+          <span>02</span>
+          <strong>Act low-risk</strong>
+          <p>Dim, turn off, confirm idle.</p>
+        </div>
+        <div class="flow-step human">
+          <span>03</span>
+          <strong>Escalate judgment</strong>
+          <p>Pause on locks, access, or uncertainty.</p>
+        </div>
+      </section>
+
       <section class="grid">
-        <article>
+        <article class="wide">
           <h2>Device State</h2>
           <div id="devices" class="cards"></div>
         </article>
