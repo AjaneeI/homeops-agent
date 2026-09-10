@@ -4,6 +4,10 @@
 
 HomeOps Agent
 
+## Repository
+
+https://github.com/AjaneeI/homeops-agent
+
 ## Short Description
 
 HomeOps Agent coordinates a mixed smart home by checking device state, completing low-risk routine actions, and escalating safety-sensitive decisions to the human.

@@ -66,7 +66,7 @@ Current demo state is simulated so the judging walkthrough is reliable. One real
 
 ## Submission Checklist
 
-- [ ] Public GitHub repo named `homeops-agent`
+- [x] Public GitHub repo named `homeops-agent`
 - [x] README skeleton
 - [x] MIT license
 - [x] Architecture diagram draft
