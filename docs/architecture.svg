@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">HomeOps Agent architecture</title>
+  <desc id="desc">Architecture diagram showing user request, Strands agent, tool registry, device simulation layer, approval gate, audit log, and dashboard.</desc>
+  <rect width="1280" height="720" fill="#f8f6f0"/>
+  <rect x="70" y="70" width="1140" height="580" rx="28" fill="#ffffff" stroke="#d9d4c7"/>
+  <text x="100" y="126" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#172326">HomeOps Agent Architecture</text>
+  <text x="100" y="162" font-family="Inter, Arial, sans-serif" font-size="18" fill="#526467">Good Night Check keeps routine actions automatic and safety decisions human-gated.</text>
+
+  <g font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#172326">
+    <rect x="110" y="270" width="170" height="86" rx="14" fill="#eef4f1" stroke="#bdd0c7"/>
+    <text x="145" y="307">User taps</text>
+    <text x="132" y="331">Good Night Check</text>
+
+    <rect x="345" y="250" width="180" height="126" rx="14" fill="#183f38"/>
+    <text x="390" y="300" fill="#ffffff">Strands</text>
+    <text x="392" y="326" fill="#ffffff">Agent</text>
+
+    <rect x="590" y="250" width="190" height="126" rx="14" fill="#f4efe4" stroke="#d9d4c7"/>
+    <text x="635" y="301">Tool Registry</text>
+    <text x="622" y="327" font-size="14" font-weight="500" fill="#526467">state, action, approval, log</text>
+
+    <rect x="845" y="210" width="215" height="86" rx="14" fill="#eef4f1" stroke="#bdd0c7"/>
+    <text x="888" y="247">Device Layer</text>
+    <text x="884" y="272" font-size="14" font-weight="500" fill="#526467">simulation + safe APIs</text>
+
+    <rect x="845" y="330" width="215" height="86" rx="14" fill="#fff9f2" stroke="#dda77f"/>
+    <text x="891" y="367">Approval Gate</text>
+    <text x="878" y="392" font-size="14" font-weight="500" fill="#526467">locks and access changes</text>
+
+    <rect x="845" y="450" width="215" height="86" rx="14" fill="#f4efe4" stroke="#d9d4c7"/>
+    <text x="909" y="487">Audit Log</text>
+    <text x="895" y="512" font-size="14" font-weight="500" fill="#526467">visible action history</text>
+
+    <rect x="1100" y="330" width="70" height="86" rx="14" fill="#247963"/>
+    <text x="1117" y="367" fill="#ffffff">Web</text>
+    <text x="1109" y="392" fill="#ffffff">Demo</text>
+  </g>
+
+  <g stroke="#8b9b8c" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M280 313 H345"/>
+    <path d="M525 313 H590"/>
+    <path d="M780 313 C810 313 812 253 845 253"/>
+    <path d="M780 313 C812 313 812 373 845 373"/>
+    <path d="M780 313 C812 313 812 493 845 493"/>
+    <path d="M1060 253 C1090 253 1090 350 1100 350"/>
+    <path d="M1060 373 H1100"/>
+    <path d="M1060 493 C1090 493 1090 396 1100 396"/>
+  </g>
+</svg>

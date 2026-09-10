@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HomeOps Agent</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Agents for Humans Hackathon</p>
+          <h1>HomeOps Agent</h1>
+          <p class="lede">A calm operations layer for a mixed smart home: routine fixes happen quietly, security decisions stay with you.</p>
+        </div>
+        <button id="run-check" type="button">Run Good Night Check</button>
+      </header>
+
+      <section class="console">
+        <div class="control-row" aria-label="Demo scenarios">
+          <label for="scenario">Scenario</label>
+          <select id="scenario">
+            <option value="all-clear">All clear</option>
+            <option value="fix-needed" selected>Outlet/light fix needed</option>
+            <option value="lock-unknown">Lock status unknown</option>
+          </select>
+        </div>
+
+        <section class="status-strip">
+          <div>
+            <span class="label">Agent summary</span>
+            <strong id="summary">Ready to check the home.</strong>
+          </div>
+          <div>
+            <span class="label">Safety mode</span>
+            <strong>Human approval for locks</strong>
+          </div>
+          <div>
+            <span class="label">Mode</span>
+            <strong>Good Night Check</strong>
+          </div>
+        </section>
+      </section>
+
+      <section class="grid">
+        <article>
+          <h2>Device State</h2>
+          <div id="devices" class="cards"></div>
+        </article>
+        <article>
+          <h2>Actions Taken</h2>
+          <div id="actions" class="stack empty">No actions yet.</div>
+        </article>
+        <article>
+          <h2>Approval Requests</h2>
+          <div id="approvals" class="stack empty">No approvals yet.</div>
+        </article>
+        <article>
+          <h2>Audit Trail</h2>
+          <div id="audit" class="stack empty">Audit events will appear here.</div>
+        </article>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

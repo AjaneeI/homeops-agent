@@ -1,0 +1,9 @@
+[project]
+name = "homeops-agent"
+version = "0.1.0"
+description = "Good Night Check smart-home operations agent for the Agents for Humans Hackathon."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,13 @@
+Task Name,Section,Due Date,Description
+Lock MVP scope,Today,2026-09-10,"Confirm Good Night Check as the MVP, simulated device list, safety boundaries, and one-sentence pitch."
+Create repo skeleton,Today,2026-09-10,"README, MIT license, project structure, starter web demo, and agent tool contracts."
+Implement Good Night Check tools,Build,2026-09-11,"Build get_device_state, execute_safe_action, request_human_approval, and write_audit_log."
+Add Strands SDK wrapper,Build,2026-09-11,"Wrap the Good Night Check flow with Strands Agents SDK while preserving safety boundaries."
+Evaluate one real safe integration,Build,2026-09-11,"Decide whether Govee or SwitchBot is feasible; avoid lock automation."
+Finish dashboard scenarios,Build,2026-09-12,"All clear, outlet/light fix needed, and lock status unknown scenarios."
+Polish web demo,Build,2026-09-12,"Make the dashboard reliable, readable, and demo-ready in a fresh browser."
+Create architecture diagram,Demo Assets,2026-09-13,"Use user request -> Strands agent -> tool registry -> device/simulation layer -> approval gate -> audit log/dashboard."
+Write README final,Demo Assets,2026-09-13,"Setup, demo steps, safety boundaries, simulated-vs-real disclosure, and tool contracts."
+Draft Devpost copy,Submission,2026-09-13,"Description, inspiration, what it does, safety, built-with, and testing instructions."
+Record public demo video,Submission,2026-09-14,"Keep under five minutes: problem, user, walkthrough, safety, and impact."
+Submit on Devpost,Submission,2026-09-14,"Confirm public repo, video, architecture diagram, AWS Builder ID, and submit before 8 PM ET."
