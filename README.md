@@ -16,6 +16,8 @@ The web demo includes three scenarios:
 - **Outlet/light fix needed:** the agent dims the bedside bulb and turns off the SwitchBot outlet.
 - **Lock status unknown:** the agent does not change the lock automatically and requests human review.
 
+The dashboard also includes a visible tool-call trace so judges can see the agent workflow: device-state reads, safe action execution, approval requests, and audit-log writes.
+
 ## Safety Boundaries
 
 - The agent never unlocks doors automatically.
@@ -71,6 +73,8 @@ Current demo state is simulated so the judging walkthrough is reliable. One real
 - [x] MIT license
 - [x] Architecture diagram draft
 - [x] Good Night Check local demo
+- [x] Visible tool-call trace
+- [x] Draft video script
 - [x] Strands SDK installed locally and wired to adapter
 - [ ] Model provider credentials configured for live Strands invocation
 - [ ] Public demo video under five minutes

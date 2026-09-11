@@ -40,6 +40,7 @@ const devicesEl = document.querySelector("#devices");
 const actionsEl = document.querySelector("#actions");
 const approvalsEl = document.querySelector("#approvals");
 const auditEl = document.querySelector("#audit");
+const traceEl = document.querySelector("#trace");
 const summaryEl = document.querySelector("#summary");
 const scenarioEl = document.querySelector("#scenario");
 const auditCountEl = document.querySelector("#audit-count");
@@ -50,6 +51,10 @@ function cloneScenario() {
 
 function audit(log, event) {
   log.push({ timestamp: new Date().toISOString(), ...event });
+}
+
+function recordTool(trace, name, input, result) {
+  trace.push({ name, input, result });
 }
 
 function executeSafeAction(devices, id, action) {
@@ -66,36 +71,57 @@ function runGoodNightCheck() {
   const actions = [];
   const approvals = [];
   const log = [];
+  const trace = [];
 
   Object.entries(devices).forEach(([id, device]) => {
-    audit(log, { type: "state_checked", device: device.name, status: device.status });
+    recordTool(trace, "get_device_state", { device_id: id }, { status: device.status, safe_actions: device.safeActions });
+    const stateEvent = { type: "state_checked", device: device.name, status: device.status };
+    audit(log, stateEvent);
+    recordTool(trace, "write_audit_log", { event: stateEvent }, { stored: true });
 
     if (id === "front-door" && device.status !== "locked") {
       const approval = {
         action: "Verify front door lock",
         reason: "Door lock state is security-sensitive or uncertain, so the agent will not change it automatically.",
       };
+      recordTool(trace, "request_human_approval", { action: approval.action }, { approval_status: "required" });
       approvals.push(approval);
-      audit(log, { type: "approval_requested", ...approval });
+      const approvalEvent = { type: "approval_requested", ...approval };
+      audit(log, approvalEvent);
+      recordTool(trace, "write_audit_log", { event: approvalEvent }, { stored: true });
       return;
     }
 
     if (id === "bedside-bulb" && device.status !== "dimmed to 20%") {
-      actions.push(executeSafeAction(devices, id, "dim_to_20"));
+      const result = executeSafeAction(devices, id, "dim_to_20");
+      recordTool(trace, "execute_safe_action", { device_id: id, action: "dim_to_20" }, result);
+      actions.push(result);
     }
     if (id === "switchbot-outlet" && device.status === "on") {
-      actions.push(executeSafeAction(devices, id, "turn_off"));
+      const result = executeSafeAction(devices, id, "turn_off");
+      recordTool(trace, "execute_safe_action", { device_id: id, action: "turn_off" }, result);
+      actions.push(result);
     }
     if (id === "fire-tv" && device.status !== "idle") {
-      actions.push(executeSafeAction(devices, id, "confirm_idle"));
+      const result = executeSafeAction(devices, id, "confirm_idle");
+      recordTool(trace, "execute_safe_action", { device_id: id, action: "confirm_idle" }, result);
+      actions.push(result);
     }
   });
 
-  actions.forEach((action) => audit(log, { type: "safe_action_executed", ...action }));
-  render(devices, actions, approvals, log);
+  actions.forEach((action) => {
+    const actionEvent = { type: "safe_action_executed", ...action };
+    audit(log, actionEvent);
+    recordTool(trace, "write_audit_log", { event: actionEvent }, { stored: true });
+  });
+  render(devices, actions, approvals, log, trace);
 }
 
-function render(devices, actions = [], approvals = [], log = []) {
+function formatPayload(payload) {
+  return JSON.stringify(payload).replaceAll('"', "");
+}
+
+function render(devices, actions = [], approvals = [], log = [], trace = []) {
   devicesEl.innerHTML = Object.values(devices)
     .map((device) => `<div class="card ${device.status === "unknown" ? "warn" : ""}">
       <span class="device-name">${device.name}</span>
@@ -112,6 +138,11 @@ function render(devices, actions = [], approvals = [], log = []) {
   approvalsEl.innerHTML = approvals.length
     ? approvals.map((approval) => `<div class="item warn"><strong>${approval.action}</strong><span class="muted">${approval.reason}</span></div>`).join("")
     : "No approvals required.";
+
+  traceEl.className = trace.length ? "stack trace-list" : "stack empty";
+  traceEl.innerHTML = trace.length
+    ? trace.map((call) => `<div class="item trace-item"><strong>${call.name}</strong><span class="muted">Input ${formatPayload(call.input)}</span><span class="muted">Result ${formatPayload(call.result)}</span></div>`).join("")
+    : "Tool calls will appear after a run.";
 
   auditEl.className = log.length ? "stack" : "stack empty";
   auditEl.innerHTML = log.length
