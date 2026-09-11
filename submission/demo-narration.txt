@@ -1,0 +1,21 @@
+Smart homes are useful, but the experience is still fragmented.
+
+In my own setup, the routine is spread across Echo devices, outlets, lights, Fire TV, Alexa routines, and a front door lock that should never be handled casually.
+
+HomeOps Agent is my answer to that problem. It is not another smart-home remote. It is an operations layer for the home.
+
+The demo centers on a Good Night Check. The agent reads the current device state, handles low-risk routine actions, and stops when a decision belongs to a person.
+
+Here the bedside bulb is too bright, the SwitchBot outlet is still on, and Fire TV is active. Those are safe routine fixes, so the agent dims the light, turns off the outlet, confirms the media state, and writes the result to the audit trail.
+
+The important part is visible in the tool trace. Judges can see the agent loop instead of trusting a black box: get device state, execute safe action, request approval when needed, and write the audit log.
+
+Now watch the safety case. When the front door lock status is unknown, the agent does not guess. It does not unlock anything. It creates a human approval request and records the decision.
+
+That is the product judgment behind HomeOps Agent. The point is not automation for its own sake. The point is less repetitive checking, clearer handoffs, and a firm boundary around consequential decisions.
+
+The project uses Python and the Strands Agents SDK, with explicit tools for device state, safe actions, human approval, and audit logging. The web demo uses deterministic simulation so the judging flow is reliable, while the Strands adapter is ready for model-backed execution.
+
+HomeOps Agent could grow into a practical assistant for households, caregivers, renters, or property teams coordinating mixed smart-home devices.
+
+It makes the smart home feel less like a pile of commands and more like a system you can trust.
