@@ -9,22 +9,46 @@
   <body>
     <main class="app">
       <header class="topbar">
-        <div class="hero-copy">
-          <p class="eyebrow">Agents for Humans Hackathon</p>
-          <h1>Not a remote. An operations layer for the home.</h1>
-          <p class="lede">HomeOps Agent checks the messy state of a real smart home, fixes the low-risk routine stuff, and stops when judgment belongs to a person.</p>
-          <div class="signal-row" aria-label="Project signals">
-            <span>Strands Agent</span>
-            <span>Simulation-first</span>
-            <span>Safety-gated</span>
+        <nav class="nav" aria-label="Project summary">
+          <span class="brand-mark">H</span>
+          <span class="brand-name">HomeOps Agent</span>
+          <span class="nav-pill">Agents for Humans</span>
+        </nav>
+        <section class="hero-stage">
+          <div class="hero-copy">
+            <p class="eyebrow">Professional-grade autonomy for a real smart home</p>
+            <h1>Not another remote. A judgment layer for the home.</h1>
+            <p class="lede">HomeOps Agent checks mixed device state, completes routine low-risk actions, and pauses when safety or uncertainty needs a person.</p>
+            <div class="signal-row" aria-label="Project signals">
+              <span>Built with Strands</span>
+              <span>Human approval gate</span>
+              <span>Auditable by design</span>
+            </div>
           </div>
-        </div>
-        <div class="hero-panel" aria-label="HomeOps agent status">
-          <span class="panel-kicker">Tonight's runbook</span>
-          <strong>Good Night Check</strong>
-          <p>Check lock, dim bedroom light, turn off outlet, confirm media idle, write audit trail.</p>
-          <button id="run-check" type="button">Run Good Night Check</button>
-        </div>
+
+          <div class="operations-panel" aria-label="HomeOps live operating map">
+            <div class="panel-header">
+              <span class="panel-kicker">Tonight's runbook</span>
+              <strong>Good Night Check</strong>
+            </div>
+            <div class="home-map" aria-hidden="true">
+              <span class="scan-ring"></span>
+              <span class="agent-core">
+                <small>Agent</small>
+                <strong>Ready</strong>
+              </span>
+              <span class="node node-lock" data-device="front-door"><b></b><small>Lock</small></span>
+              <span class="node node-light" data-device="bedside-bulb"><b></b><small>Bulb</small></span>
+              <span class="node node-outlet" data-device="switchbot-outlet"><b></b><small>Outlet</small></span>
+              <span class="node node-tv" data-device="fire-tv"><b></b><small>Fire TV</small></span>
+              <span class="node node-echo" data-device="echo-group"><b></b><small>Echo</small></span>
+            </div>
+            <div class="run-card">
+              <p>Check lock, dim bedroom light, turn off outlet, confirm media idle, write audit trail.</p>
+              <button id="run-check" type="button">Run Good Night Check</button>
+            </div>
+          </div>
+        </section>
       </header>
 
       <section class="console">
@@ -47,16 +71,16 @@
             <strong id="summary">Ready to check the home.</strong>
           </div>
           <div>
-            <span class="label">Safety mode</span>
-            <strong>Human approval for locks</strong>
+            <span class="label">Devices checked</span>
+            <strong id="devices-checked">5 devices</strong>
           </div>
           <div>
-            <span class="label">Mode</span>
-            <strong>Good Night Check</strong>
+            <span class="label">Automatic actions</span>
+            <strong id="safe-actions">0 safe actions</strong>
           </div>
           <div>
-            <span class="label">Audit posture</span>
-            <strong id="audit-count">0 events</strong>
+            <span class="label">Human review</span>
+            <strong id="human-review">None</strong>
           </div>
         </section>
       </section>

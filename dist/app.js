@@ -50,7 +50,13 @@ const auditEl = document.querySelector("#audit");
 const traceEl = document.querySelector("#trace");
 const summaryEl = document.querySelector("#summary");
 const scenarioEl = document.querySelector("#scenario");
-const auditCountEl = document.querySelector("#audit-count");
+const devicesCheckedEl = document.querySelector("#devices-checked");
+const safeActionsEl = document.querySelector("#safe-actions");
+const humanReviewEl = document.querySelector("#human-review");
+const runCheckEl = document.querySelector("#run-check");
+const flowEl = document.querySelector(".flow");
+const agentCoreEl = document.querySelector(".agent-core strong");
+const mapNodes = document.querySelectorAll(".node[data-device]");
 
 function cloneScenario() {
   return JSON.parse(JSON.stringify(scenarios[scenarioEl.value]));
@@ -133,7 +139,7 @@ function formatPayload(payload) {
 
 function render(devices, actions = [], approvals = [], log = [], trace = []) {
   devicesEl.innerHTML = Object.values(devices)
-    .map((device) => `<div class="card ${device.status === "unknown" ? "warn" : ""}">
+    .map((device) => `<div class="card ${deviceClass(device.status)}">
       <span class="device-name">${device.name}</span>
       <span class="muted">${deviceLabels[device.kind]} · ${device.status}</span>
     </div>`)
@@ -144,7 +150,7 @@ function render(devices, actions = [], approvals = [], log = [], trace = []) {
     ? actions.map((action) => {
       const title = action.ok ? actionLabels[action.action] : `Could not ${action.action.replaceAll("_", " ")}`;
       const detail = action.ok ? `${action.device} is now ${action.status}.` : `${action.device} was left unchanged: ${action.reason}`;
-      return `<div class="item ${action.ok ? "" : "warn"}"><strong>${title}</strong><span class="muted">${detail}</span></div>`;
+      return `<div class="item ${action.ok ? "" : "fail"}"><strong>${title}</strong><span class="muted">${detail}</span></div>`;
     }).join("")
     : "No automatic actions needed.";
 
@@ -164,12 +170,43 @@ function render(devices, actions = [], approvals = [], log = [], trace = []) {
     : "Audit events will appear here.";
 
   summaryEl.textContent = approvals.length ? "Good Night Check complete with human review required." : "Good Night Check complete.";
-  auditCountEl.textContent = `${log.length} ${log.length === 1 ? "event" : "events"}`;
+  devicesCheckedEl.textContent = `${Object.keys(devices).length} devices`;
+  const successfulActions = actions.filter((action) => action.ok).length;
+  safeActionsEl.textContent = `${successfulActions} safe ${successfulActions === 1 ? "action" : "actions"}`;
+  humanReviewEl.textContent = approvals.length ? `${approvals.length} needed` : "None";
+  agentCoreEl.textContent = approvals.length ? "Review" : actions.some((action) => !action.ok) ? "Degraded" : trace.length ? "Clear" : "Ready";
+  renderMap(devices);
+}
+
+function deviceClass(status) {
+  if (status === "unknown") return "warn";
+  if (status === "unreachable") return "fail";
+  return "";
+}
+
+function renderMap(devices) {
+  mapNodes.forEach((node) => {
+    const device = devices[node.dataset.device];
+    node.classList.remove("warn", "fail");
+    if (device) {
+      const className = deviceClass(device.status);
+      if (className) node.classList.add(className);
+    }
+  });
 }
 
 scenarioEl.addEventListener("change", () => {
   render(cloneScenario());
   summaryEl.textContent = "Ready to check the home.";
 });
-document.querySelector("#run-check").addEventListener("click", runGoodNightCheck);
+runCheckEl.addEventListener("click", () => {
+  runCheckEl.classList.add("is-running");
+  flowEl.classList.add("running");
+  summaryEl.textContent = "Good Night Check running.";
+  window.setTimeout(() => {
+    runGoodNightCheck();
+    runCheckEl.classList.remove("is-running");
+    flowEl.classList.remove("running");
+  }, 420);
+});
 render(cloneScenario());
