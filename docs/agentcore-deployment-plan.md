@@ -7,6 +7,7 @@ HomeOps Agent is designed so the current Strands agent can move from determinist
 - Web demo: hosted static dashboard
 - Agent logic: Python package
 - Strands integration: `src/homeops_agent/strands_adapter.py`
+- Live invocation path: `PYTHONPATH=src python -m homeops_agent.cli --live-strands-run --scenario fix-needed`
 - Device layer: simulated devices for repeatable judging
 - Safety policy: lock and access changes are approval-gated
 - Audit layer: every state check, action, and approval request is recorded

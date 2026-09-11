@@ -57,6 +57,17 @@ def build_strands_agent(scenario: str = "fix-needed") -> Any:
     )
 
 
+def run_live_strands_demo(scenario: str = "fix-needed") -> str:
+    """Invoke the official Strands Agent when model credentials are configured."""
+    agent = build_strands_agent(scenario)
+    prompt = (
+        "Run the HomeOps Good Night Check. Check each device state, execute only low-risk routine actions, "
+        "request human approval for lock uncertainty or access changes, and write audit events for each step. "
+        "Return a concise summary of actions, approvals, and safety decisions."
+    )
+    return str(agent(prompt))
+
+
 def run_deterministic_demo(scenario: str) -> dict[str, Any]:
     """Run the same policy deterministically for local demos and tests."""
     return HomeOpsAgent(scenario_state(scenario)).run_good_night_check()

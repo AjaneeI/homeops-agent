@@ -51,17 +51,29 @@ Run the deterministic agent simulation:
 PYTHONPATH=src python -m homeops_agent.cli --scenario fix-needed
 ```
 
+Run the failure-path simulation:
+
+```bash
+PYTHONPATH=src python -m homeops_agent.cli --scenario device-failure
+```
+
 Verify the Strands agent object can be built after installing dependencies:
 
 ```bash
 PYTHONPATH=src python -m homeops_agent.cli --build-strands-agent
 ```
 
+Invoke the live Strands agent when model provider credentials are configured:
+
+```bash
+PYTHONPATH=src python -m homeops_agent.cli --live-strands-run --scenario fix-needed
+```
+
 ## Strands Integration
 
 The MVP keeps agent tools isolated in `src/homeops_agent/tools.py` and the Good Night Check policy in `src/homeops_agent/agent.py`. `src/homeops_agent/strands_adapter.py` uses the official Strands `Agent` and `@tool` interfaces.
 
-The local web demo stays deterministic so judges can reliably see the safety behavior. The Strands entrypoint is ready for model-backed execution once AWS Bedrock or another model provider is configured.
+The local web demo stays deterministic so judges can reliably see the safety behavior. The Strands entrypoint can also be invoked through `--live-strands-run` once AWS Bedrock or another model provider is configured.
 
 ## Judging Strategy
 

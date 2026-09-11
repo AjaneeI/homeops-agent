@@ -13,6 +13,8 @@ HomeOps Agent uses a Strands-ready architecture with explicit tool contracts:
 
 The project includes a deterministic web demo for reliable judging and a Python adapter using the official Strands `Agent` and `@tool` interfaces. The implementation is intentionally transparent: the dashboard shows the tool trace so judges can see how the agent moves from state reading to safe actions, approval requests, and audit logging.
 
+The CLI also includes a live Strands invocation path for environments with model provider credentials configured. In environments without credentials, the command reports that missing dependency clearly while still confirming that the Strands agent object can be built.
+
 ## Design
 
 The demo is a complete product experience around one focused workflow: Good Night Check. It avoids a generic chat box and instead shows the operational surface a user would need at night:

@@ -30,6 +30,8 @@ HomeOps Agent is intentionally conservative. It never unlocks doors automaticall
 
 Python, JavaScript, HTML, CSS, simulated device tools, and the Strands Agents SDK using the official `Agent` and `@tool` interfaces.
 
+The repo includes both a deterministic judging mode and a live Strands invocation path. The deterministic mode keeps the demo reliable for reviewers; the live mode can run with model provider credentials configured.
+
 ## Testing Instructions
 
 1. Run `python3 -m http.server 4173 -d web`.
@@ -37,3 +39,5 @@ Python, JavaScript, HTML, CSS, simulated device tools, and the Strands Agents SD
 3. Select each demo scenario.
 4. Click `Run Good Night Check`.
 5. Confirm that safe actions run automatically, lock uncertainty creates an approval request, device failure leaves the device unchanged, and the tool trace records the agent loop.
+6. Optional: run `PYTHONPATH=src python -m homeops_agent.cli --build-strands-agent` to confirm the official Strands `Agent` object builds.
+7. Optional with credentials: run `PYTHONPATH=src python -m homeops_agent.cli --live-strands-run --scenario fix-needed`.
