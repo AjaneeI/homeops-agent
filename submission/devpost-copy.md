@@ -18,7 +18,7 @@ Smart homes are useful, but they can become fragmented across routines, apps, de
 
 ## What It Does
 
-The MVP runs a Good Night Check across simulated smart-home devices: a front door lock, Govee bedside bulb, SwitchBot outlet, Fire TV, and Echo surround group. It dims lights, turns off low-risk outlets, confirms media devices are idle, and pauses on lock uncertainty instead of acting automatically.
+The MVP runs a Good Night Check across simulated smart-home devices: a front door lock, Govee bedside bulb, SwitchBot outlet, Fire TV, and Echo surround group. It dims lights, turns off low-risk outlets, confirms media devices are idle, pauses on lock uncertainty instead of acting automatically, and records device/API failures without changing the device.
 
 The dashboard shows device state, actions taken, approval requests, audit history, and a visible tool-call trace so the agent workflow is easy to inspect.
 
@@ -36,4 +36,4 @@ Python, JavaScript, HTML, CSS, simulated device tools, and the Strands Agents SD
 2. Open `http://localhost:4173`.
 3. Select each demo scenario.
 4. Click `Run Good Night Check`.
-5. Confirm that safe actions run automatically, lock uncertainty creates an approval request, and the tool trace records the agent loop.
+5. Confirm that safe actions run automatically, lock uncertainty creates an approval request, device failure leaves the device unchanged, and the tool trace records the agent loop.

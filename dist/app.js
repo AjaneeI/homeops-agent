@@ -20,6 +20,13 @@ const scenarios = {
     "fire-tv": { name: "Fire TV", kind: "media", status: "idle", safeActions: ["confirm_idle"] },
     "echo-group": { name: "Echo Surround Group", kind: "speaker_group", status: "quiet", safeActions: [] },
   },
+  "device-failure": {
+    "front-door": { name: "Front Door Lock", kind: "lock", status: "locked", safeActions: [] },
+    "bedside-bulb": { name: "Govee Bedside Bulb", kind: "light", status: "unreachable", safeActions: ["dim_to_20"] },
+    "switchbot-outlet": { name: "SwitchBot Outlet", kind: "outlet", status: "on", safeActions: ["turn_off"] },
+    "fire-tv": { name: "Fire TV", kind: "media", status: "idle", safeActions: ["confirm_idle"] },
+    "echo-group": { name: "Echo Surround Group", kind: "speaker_group", status: "quiet", safeActions: [] },
+  },
 };
 
 const actionLabels = {
@@ -58,6 +65,9 @@ function recordTool(trace, name, input, result) {
 }
 
 function executeSafeAction(devices, id, action) {
+  if (devices[id].status === "unreachable") {
+    return { ok: false, device: devices[id].name, action, reason: "Device API is unavailable." };
+  }
   if (!devices[id].safeActions.includes(action)) {
     return { ok: false, device: devices[id].name, action, reason: "Action is not low-risk." };
   }
@@ -131,7 +141,11 @@ function render(devices, actions = [], approvals = [], log = [], trace = []) {
 
   actionsEl.className = actions.length ? "stack" : "stack empty";
   actionsEl.innerHTML = actions.length
-    ? actions.map((action) => `<div class="item"><strong>${actionLabels[action.action]}</strong><span class="muted">${action.device} is now ${action.status}.</span></div>`).join("")
+    ? actions.map((action) => {
+      const title = action.ok ? actionLabels[action.action] : `Could not ${action.action.replaceAll("_", " ")}`;
+      const detail = action.ok ? `${action.device} is now ${action.status}.` : `${action.device} was left unchanged: ${action.reason}`;
+      return `<div class="item ${action.ok ? "" : "warn"}"><strong>${title}</strong><span class="muted">${detail}</span></div>`;
+    }).join("")
     : "No automatic actions needed.";
 
   approvalsEl.className = approvals.length ? "stack" : "stack empty";

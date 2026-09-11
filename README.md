@@ -15,6 +15,7 @@ The web demo includes three scenarios:
 - **All clear:** the home is already ready for the night.
 - **Outlet/light fix needed:** the agent dims the bedside bulb and turns off the SwitchBot outlet.
 - **Lock status unknown:** the agent does not change the lock automatically and requests human review.
+- **Device API failure:** the agent records the failure, reports it clearly, and leaves the device unchanged.
 
 The dashboard also includes a visible tool-call trace so judges can see the agent workflow: device-state reads, safe action execution, approval requests, and audit-log writes.
 

@@ -18,6 +18,10 @@ class HomeState:
     def __init__(self, devices: dict[str, Device]) -> None:
         self.devices = devices
         self.audit_log: list[dict[str, Any]] = []
+        self.tool_trace: list[dict[str, Any]] = []
+
+    def record_tool_call(self, name: str, input_payload: dict[str, Any], result: dict[str, Any]) -> None:
+        self.tool_trace.append({"tool": name, "input": input_payload, "result": result})
 
     def get_device_state(self, device_id: str) -> dict[str, Any]:
         device = self.devices[device_id]
@@ -31,6 +35,9 @@ class HomeState:
 
     def execute_safe_action(self, device_id: str, action: str) -> dict[str, Any]:
         device = self.devices[device_id]
+        if device.status == "unreachable":
+            return {"ok": False, "device_id": device_id, "action": action, "reason": "Device API is unavailable."}
+
         if action not in device.safe_actions:
             return {"ok": False, "device_id": device_id, "action": action, "reason": "Action is not low-risk."}
 
@@ -72,6 +79,13 @@ def scenario_state(name: str) -> HomeState:
             "front-door": Device("front-door", "Front Door Lock", "lock", "unknown", ()),
             "bedside-bulb": Device("bedside-bulb", "Govee Bedside Bulb", "light", "on at 60%", ("dim_to_20",)),
             "switchbot-outlet": Device("switchbot-outlet", "SwitchBot Outlet", "outlet", "off", ("turn_off",)),
+            "fire-tv": Device("fire-tv", "Fire TV", "media", "idle", ("confirm_idle",)),
+            "echo-group": Device("echo-group", "Echo Surround Group", "speaker_group", "quiet", ()),
+        },
+        "device-failure": {
+            "front-door": Device("front-door", "Front Door Lock", "lock", "locked", ()),
+            "bedside-bulb": Device("bedside-bulb", "Govee Bedside Bulb", "light", "unreachable", ("dim_to_20",)),
+            "switchbot-outlet": Device("switchbot-outlet", "SwitchBot Outlet", "outlet", "on", ("turn_off",)),
             "fire-tv": Device("fire-tv", "Fire TV", "media", "idle", ("confirm_idle",)),
             "echo-group": Device("echo-group", "Echo Surround Group", "speaker_group", "quiet", ()),
         },
