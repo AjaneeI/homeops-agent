@@ -28,16 +28,20 @@ Now watch the safety case. When the front door lock status is unknown, the agent
 
 8
 00:01:19,000 --> 00:01:31,000
-That is the product judgment behind HomeOps Agent. The point is not automation for its own sake. The point is less repetitive checking, clearer handoffs, and a firm boundary around consequential decisions.
+There is also a failure case. If a device API is unavailable, the agent reports the failed action, leaves the device unchanged, and keeps the event in the audit trail.
 
 9
-00:01:31,000 --> 00:01:47,000
-The project uses Python and the Strands Agents SDK, with explicit tools for device state, safe actions, human approval, and audit logging. The web demo uses deterministic simulation so the judging flow is reliable, while the Strands adapter is ready for model-backed execution.
+00:01:31,000 --> 00:01:43,000
+That is the product judgment behind HomeOps Agent. The point is not automation for its own sake. The point is less repetitive checking, clearer handoffs, and a firm boundary around consequential decisions.
 
 10
-00:01:47,000 --> 00:01:58,000
-HomeOps Agent could grow into a practical assistant for households, caregivers, renters, or property teams coordinating mixed smart-home devices.
+00:01:43,000 --> 00:01:59,000
+The project uses Python and the Strands Agents SDK, with explicit tools for device state, safe actions, human approval, and audit logging. The web demo uses deterministic simulation so the judging flow is reliable, while the Strands adapter is ready for model-backed execution.
 
 11
-00:01:58,000 --> 00:02:05,000
+00:01:59,000 --> 00:02:10,000
+HomeOps Agent could grow into a practical assistant for households, caregivers, renters, or property teams coordinating mixed smart-home devices.
+
+12
+00:02:10,000 --> 00:02:17,000
 It makes the smart home feel less like a pile of commands and more like a system you can trust.

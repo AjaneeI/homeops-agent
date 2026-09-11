@@ -12,6 +12,8 @@ The important part is visible in the tool trace. Judges can see the agent loop i
 
 Now watch the safety case. When the front door lock status is unknown, the agent does not guess. It does not unlock anything. It creates a human approval request and records the decision.
 
+There is also a failure case. If a device API is unavailable, the agent reports the failed action, leaves the device unchanged, and keeps the event in the audit trail. That is boring on purpose. For home operations, quiet failure handling matters.
+
 That is the product judgment behind HomeOps Agent. The point is not automation for its own sake. The point is less repetitive checking, clearer handoffs, and a firm boundary around consequential decisions.
 
 The project uses Python and the Strands Agents SDK, with explicit tools for device state, safe actions, human approval, and audit logging. The web demo uses deterministic simulation so the judging flow is reliable, while the Strands adapter is ready for model-backed execution.

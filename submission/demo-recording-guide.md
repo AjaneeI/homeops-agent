@@ -11,7 +11,19 @@ Target length: 2 to 3 minutes. Keep it public, under the hackathon's 5-minute li
 5. Pause briefly on the device state, actions taken, tool trace, and audit trail.
 6. Switch to "Lock status unknown."
 7. Run the check again and pause on the approval request.
-8. End on the safety point: the agent handles routine work, but it does not guess on locks or access.
+8. Switch to "Device API failure."
+9. Run the check again and show that the failed light action is reported while the device is left unchanged.
+10. End on the safety point: the agent handles routine work, but it does not guess on locks, access, or broken device state.
+
+## Judge-Facing Story Beats
+
+Use these moments as anchors while recording:
+
+1. Product thesis: this is an operations layer, not another control panel.
+2. Technical proof: the tool trace makes the Strands-style loop visible.
+3. Safety proof: lock uncertainty creates approval instead of automatic action.
+4. Reliability proof: device failure is recorded and does not silently change state.
+5. Growth path: AgentCore can host the Strands agent while tool boundaries stay stable.
 
 ## Voiceover Direction
 
