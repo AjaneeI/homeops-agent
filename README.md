@@ -1,23 +1,33 @@
 # HomeOps Agent
 
-HomeOps Agent is not a smart-home remote. It is an operations layer for the home: it checks device state, completes low-risk routine actions, and escalates safety-sensitive decisions to the human.
+HomeOps Agent is an applied AI prototype for treating the home as an operations system rather than a collection of disconnected smart-device routines. It checks device state, completes low-risk routine actions, and escalates safety-sensitive decisions to the human.
 
-This hackathon MVP focuses on one polished scenario: **Good Night Check**. It uses a Strands-ready agent shape with explicit tools, simulated smart-home devices, an approval gate, and an audit trail.
+## Recruiter Quick Read
 
-## Why It Matters
+**What I built:** a deterministic agent workflow around a `Good Night Check` scenario, with explicit tool contracts, simulated smart-home devices, approval gates, failure handling, and an audit trail.
 
-Smart homes often become a pile of separate routines, apps, and voice commands. HomeOps Agent treats the home like an operations system: it checks what is true now, fixes routine issues quietly, and keeps humans in control of decisions involving access, locks, or uncertainty.
+**What this demonstrates:** agent/tool design, human-in-the-loop controls, safety boundaries, deterministic testing/demo behavior, failure-path thinking, and integration planning.
 
-## MVP Demo
+**Current implementation state:** the local workflow and web demo are implemented with simulated devices. A Strands adapter is wired so the agent object can be built, while live model-provider credentials and a real device integration are not part of the current public implementation.
 
-The web demo includes three scenarios:
+## Why This Project Exists
+
+Smart homes often become a pile of separate apps, routines, and voice commands. HomeOps Agent explores a different pattern: an agent checks what is true now, resolves low-risk issues quietly, and preserves human control when access, locks, uncertainty, or failed integrations raise the risk.
+
+The design question is:
+
+> What should an agent be allowed to do automatically, and where should it stop and ask a human?
+
+## Current Scenario: Good Night Check
+
+The demo covers four paths:
 
 - **All clear:** the home is already ready for the night.
-- **Outlet/light fix needed:** the agent dims the bedside bulb and turns off the SwitchBot outlet.
+- **Outlet/light fix needed:** the agent performs low-risk actions such as dimming the bedside bulb and turning off an outlet.
 - **Lock status unknown:** the agent does not change the lock automatically and requests human review.
 - **Device API failure:** the agent records the failure, reports it clearly, and leaves the device unchanged.
 
-The dashboard also includes a visible tool-call trace so judges can see the agent workflow: device-state reads, safe action execution, approval requests, and audit-log writes.
+The dashboard includes a visible tool-call trace showing device-state reads, safe action execution, approval requests, and audit-log writes.
 
 ## Safety Boundaries
 
@@ -25,6 +35,7 @@ The dashboard also includes a visible tool-call trace so judges can see the agen
 - Door locks and access changes are read-only or approval-gated.
 - Failed device calls leave the device unchanged.
 - Every action, skipped action, and approval request is recorded in the audit trail.
+- The deterministic local demo is kept separate from live model-provider behavior so safety logic can be inspected reliably.
 
 ## Tool Contracts
 
@@ -33,7 +44,28 @@ The dashboard also includes a visible tool-call trace so judges can see the agen
 - `request_human_approval(action, reason) -> approval_status`
 - `write_audit_log(event) -> log_entry`
 
+## Architecture
+
+The agent tools live in `src/homeops_agent/tools.py`, while the Good Night Check policy is defined in `src/homeops_agent/agent.py`. `src/homeops_agent/strands_adapter.py` uses the Strands `Agent` and `@tool` interfaces.
+
+The core separation is intentional:
+
+```text
+Device state
+   |
+   v
+Agent policy
+   |
+   +--> low-risk action --------> execute + log
+   |
+   +--> safety-sensitive action -> human approval
+   |
+   +--> failed/unknown state ----> report + leave unchanged
+```
+
 ## Run Locally
+
+Start the web demo:
 
 ```bash
 python3 -m http.server 4173 -d web
@@ -51,7 +83,7 @@ Run the deterministic agent simulation:
 PYTHONPATH=src python -m homeops_agent.cli --scenario fix-needed
 ```
 
-Run the failure-path simulation:
+Run the failure path:
 
 ```bash
 PYTHONPATH=src python -m homeops_agent.cli --scenario device-failure
@@ -63,43 +95,29 @@ Verify the Strands agent object can be built after installing dependencies:
 PYTHONPATH=src python -m homeops_agent.cli --build-strands-agent
 ```
 
-Invoke the live Strands agent when model provider credentials are configured:
+A live Strands entrypoint is also available when model-provider credentials are configured:
 
 ```bash
 PYTHONPATH=src python -m homeops_agent.cli --live-strands-run --scenario fix-needed
 ```
 
-## Strands Integration
-
-The MVP keeps agent tools isolated in `src/homeops_agent/tools.py` and the Good Night Check policy in `src/homeops_agent/agent.py`. `src/homeops_agent/strands_adapter.py` uses the official Strands `Agent` and `@tool` interfaces.
-
-The local web demo stays deterministic so judges can reliably see the safety behavior. The Strands entrypoint can also be invoked through `--live-strands-run` once AWS Bedrock or another model provider is configured.
-
-## Judging Strategy
-
-HomeOps Agent is built around one thesis: it is not a smart-home remote, but an operations layer for the home. The scoring case is documented in [`docs/judging-map.md`](docs/judging-map.md).
-
-The strongest technical next step is an AWS-backed Strands invocation or AgentCore deployment path. The current deployment plan is captured in [`docs/agentcore-deployment-plan.md`](docs/agentcore-deployment-plan.md).
-
 ## Simulated vs. Real Integrations
 
-Current demo state is simulated so the judging walkthrough is reliable. One real safe integration can be added before submission, preferably Govee light control or SwitchBot outlet status/action. Door-lock behavior should remain read-only or approval-gated.
+The current public demo uses simulated devices so the agent's safety and failure behavior can be reproduced consistently. It does **not** claim a production smart-home deployment.
 
-## Submission Checklist
+A useful next engineering step would be one real, low-risk device integration such as a light or outlet status/action path while preserving door-lock behavior as read-only or approval-gated.
 
-- [x] Public GitHub repo named `homeops-agent`
-- [x] README skeleton
-- [x] MIT license
-- [x] Architecture diagram draft
-- [x] Good Night Check local demo
-- [x] Visible tool-call trace
-- [x] Draft video script
-- [x] Demo narration, captions, and recording guide
-- [x] Judging map
-- [x] AgentCore deployment plan
-- [x] Strands SDK installed locally and wired to adapter
-- [ ] Model provider credentials configured for live Strands invocation
-- [ ] AWS credits request form submitted
-- [ ] Public demo video under five minutes
-- [ ] AWS Builder ID
-- [ ] Devpost submission before September 14, 2026 at 8:00 PM ET
+## Design Decisions
+
+- Prefer deterministic behavior where safety rules can be tested directly.
+- Separate safe routine actions from high-impact actions that require approval.
+- Treat uncertainty as a reason to stop, not as permission to guess.
+- Keep an audit trail so agent behavior can be inspected after the fact.
+- Add real integrations incrementally rather than broadening permissions before the safety model is clear.
+
+## Supporting Docs
+
+- [`docs/judging-map.md`](docs/judging-map.md) captures the original hackathon framing and scoring map.
+- [`docs/agentcore-deployment-plan.md`](docs/agentcore-deployment-plan.md) captures the planned AWS/AgentCore deployment path.
+
+Those documents remain as project history. The README is now the current portfolio-facing description of the implemented system and its limitations.
