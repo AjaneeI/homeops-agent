@@ -1,7 +1,7 @@
 [project]
 name = "homeops-agent"
 version = "0.1.0"
-description = "Deterministic smart-home operations agent with low-risk automation, approval gates, and audit logging."
+description = "Deterministic smart-home operations agent using simulated devices with low-risk automation, approval gates, and audit logging."
 requires-python = ">=3.11"
 dependencies = [
   "strands-agents>=1.55.1",

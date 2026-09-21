@@ -10,7 +10,7 @@ HomeOps Agent implements a deterministic **Good Night Check** workflow for smart
 This file documents implemented behavior and test evidence as of the current repository state.
 
 ## Deterministic policy (source of truth)
-Policy is implemented in `/home/runner/work/homeops-agent/homeops-agent/src/homeops_agent/agent.py`.
+Policy is implemented in [`src/homeops_agent/agent.py`](src/homeops_agent/agent.py).
 
 `HomeOpsAgent.run_good_night_check()` iterates over:
 - `front-door`
@@ -28,7 +28,7 @@ Key rules:
 - Every state check, action result, and approval request is written to the audit log and tool trace.
 
 ## Simulated device and tool layer
-Device simulation and tool behavior are implemented in `/home/runner/work/homeops-agent/homeops-agent/src/homeops_agent/tools.py`.
+Device simulation and tool behavior are implemented in [`src/homeops_agent/tools.py`](src/homeops_agent/tools.py).
 
 `scenario_state()` provides deterministic scenarios (`all-clear`, `fix-needed`, `lock-unknown`, `device-failure`) backed by in-memory `Device` objects.
 
@@ -39,14 +39,14 @@ Device simulation and tool behavior are implemented in `/home/runner/work/homeop
 - `write_audit_log(event)` appends timestamped entries.
 
 ## Strands adapter
-Strands integration is in `/home/runner/work/homeops-agent/homeops-agent/src/homeops_agent/strands_adapter.py`:
+Strands integration is in [`src/homeops_agent/strands_adapter.py`](src/homeops_agent/strands_adapter.py):
 - `build_strands_tools()` wraps HomeState methods with Strands `@tool`.
 - `build_strands_agent()` constructs a Strands `Agent` with HomeOps system prompt and tool set.
 - `run_deterministic_demo()` runs local deterministic policy directly.
 - `run_live_strands_demo()` invokes a live Strands run if model-provider credentials are configured.
 
 ## Approval gate and audit trail evidence
-Evidence from deterministic tests in `/home/runner/work/homeops-agent/homeops-agent/tests/test_agent.py`:
+Evidence from deterministic tests in [`tests/test_agent.py`](tests/test_agent.py):
 - `test_good_night_check_executes_low_risk_actions` verifies low-risk actions execute and tool/audit events are captured.
 - `test_unknown_lock_status_requires_human_approval` verifies uncertain lock state triggers `request_human_approval` and avoids front-door action.
 - `test_device_failure_is_recorded_without_changing_device` verifies device failure is recorded without mutating failed device state.
