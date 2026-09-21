@@ -117,6 +117,7 @@ A useful next engineering step would be one real, low-risk device integration su
 
 ## Supporting Docs
 
+- [`BUILD_LOG.md`](BUILD_LOG.md) summarizes implemented behavior, deterministic evidence, and scope boundaries.
 - [`docs/judging-map.md`](docs/judging-map.md) captures the original hackathon framing and scoring map.
 - [`docs/agentcore-deployment-plan.md`](docs/agentcore-deployment-plan.md) captures the planned AWS/AgentCore deployment path.
 
