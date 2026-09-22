@@ -5,7 +5,7 @@ description = "Deterministic smart-home operations agent using simulated devices
 requires-python = ">=3.11"
 dependencies = [
   "strands-agents==1.55.1",
-  "strands-agents-tools==0.8.8",
+  "strands-agents-tools==0.8.9",
 ]
 
 [project.optional-dependencies]
