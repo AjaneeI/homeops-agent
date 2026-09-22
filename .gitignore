@@ -1,5 +1,17 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets*.json
+
+# Python
 __pycache__/
 .pytest_cache/
 .venv/
 *.pyc
+
+# macOS
 .DS_Store
