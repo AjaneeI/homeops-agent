@@ -95,6 +95,12 @@ Verify the Strands agent object can be built after installing dependencies:
 PYTHONPATH=src python -m homeops_agent.cli --build-strands-agent
 ```
 
+Run the automated tests:
+
+```bash
+python -m pytest
+```
+
 A live Strands entrypoint is also available when model-provider credentials are configured:
 
 ```bash
