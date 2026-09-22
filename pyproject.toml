@@ -4,8 +4,13 @@ version = "0.1.0"
 description = "Deterministic smart-home operations agent using simulated devices with low-risk automation, approval gates, and audit logging."
 requires-python = ">=3.11"
 dependencies = [
-  "strands-agents>=1.55.1",
-  "strands-agents-tools>=0.8.8",
+  "strands-agents==1.55.1",
+  "strands-agents-tools==0.8.8",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.1.1",
 ]
 
 [tool.pytest.ini_options]
