@@ -126,7 +126,7 @@ function runGoodNightCheck() {
   });
 
   actions.forEach((action) => {
-    const actionEvent = { type: "safe_action_executed", ...action };
+    const actionEvent = { type: action.ok ? "safe_action_executed" : "safe_action_failed", ...action };
     audit(log, actionEvent);
     recordTool(trace, "write_audit_log", { event: actionEvent }, { stored: true });
   });
