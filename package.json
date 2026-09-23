@@ -2,7 +2,7 @@
   "name": "homeops-agent-web-smoke",
   "private": true,
   "scripts": {
-    "test:web": "playwright test tests/web-smoke.spec.js --project=chromium"
+    "test:web": "playwright test tests/web-smoke.spec.js"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0"
