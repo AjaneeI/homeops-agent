@@ -65,3 +65,25 @@ In scenario `device-failure`:
 - Deterministic tests validate policy logic and simulated tool behavior.
 - Deterministic tests do **not** verify live model-provider quality, prompt-response behavior, or real physical device integrations.
 - This repository does not claim production deployment, physical device validation, or live model benchmarking.
+
+
+## September 23, 2026 — SwitchBot outlet integration preparation
+
+A narrow SwitchBot OpenAPI v1.1 adapter is implemented on a separate evaluation branch as the only current real-device candidate.
+
+Implemented boundaries:
+- simulation remains the default HomeOps path
+- live provider execution requires an explicit `--live-switchbot-outlet` CLI flag
+- credentials are read only from `SWITCHBOT_TOKEN`, `SWITCHBOT_SECRET`, and `SWITCHBOT_OUTLET_DEVICE_ID`
+- signed API requests use a timestamp, nonce, and HMAC-SHA256 signature
+- the adapter reads only the configured device status
+- the only action exposed is `turnOff`
+- an already-off outlet produces no action
+- an unknown/missing power state blocks action
+- missing credentials and provider/API failures fail closed and are surfaced in the returned audit log
+- no lock or access path is present in the adapter
+- automated tests use fakes/mocks and require no real credential or device
+
+Evidence boundary:
+- implementation and mock-test evidence are not physical-device evidence
+- do not close issue #2 or claim a real smart-home integration until one credentialed physical outlet run succeeds and its result is reviewed
