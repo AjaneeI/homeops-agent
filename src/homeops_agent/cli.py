@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 
+from .integrations.switchbot import run_switchbot_outlet_check
 from .strands_adapter import build_strands_agent, run_deterministic_demo, run_live_strands_demo
 
 
@@ -27,7 +28,19 @@ def main() -> None:
         action="store_true",
         help="Invoke the official Strands Agent. Requires configured model provider credentials.",
     )
+    parser.add_argument(
+        "--live-switchbot-outlet",
+        action="store_true",
+        help=(
+            "Run the opt-in SwitchBot outlet status/turn-off path. Requires "
+            "SWITCHBOT_TOKEN, SWITCHBOT_SECRET, and SWITCHBOT_OUTLET_DEVICE_ID."
+        ),
+    )
     args = parser.parse_args()
+
+    if args.live_switchbot_outlet:
+        print(json.dumps(run_switchbot_outlet_check(), indent=2))
+        return
 
     if args.build_strands_agent:
         agent = build_strands_agent(args.scenario)
