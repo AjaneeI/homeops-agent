@@ -2,6 +2,8 @@
 
 HomeOps Agent is an applied AI prototype for treating the home as an operations system rather than a collection of disconnected smart-device routines. It checks device state, completes low-risk routine actions, and escalates safety-sensitive decisions to the human.
 
+[Live case study](https://ajaneeigharo.com/work/homeops-agent)
+
 ## Recruiter Quick Read
 
 **What I built:** a deterministic agent workflow around a `Good Night Check` scenario, with explicit tool contracts, simulated smart-home devices, approval gates, failure handling, and an audit trail.
