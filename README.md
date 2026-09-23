@@ -10,7 +10,7 @@ HomeOps Agent is an applied AI prototype for treating the home as an operations 
 
 **What this demonstrates:** agent/tool design, human-in-the-loop controls, safety boundaries, deterministic testing/demo behavior, failure-path thinking, and integration planning.
 
-**Current implementation state:** the local workflow and web demo are implemented with simulated devices. A Strands adapter is wired so the agent object can be built, while live model-provider credentials and a real device integration are not part of the current public implementation.
+**Current implementation state:** the local workflow and web demo remain simulation-first. A Strands adapter is wired so the agent object can be built. A narrow SwitchBot OpenAPI v1.1 outlet adapter is now under evaluation behind an explicit opt-in CLI path; it is not yet claimed as physically validated until a credentialed device run succeeds.
 
 ## Why This Project Exists
 
@@ -111,9 +111,34 @@ PYTHONPATH=src python -m homeops_agent.cli --live-strands-run --scenario fix-nee
 
 ## Simulated vs. Real Integrations
 
-The current public demo uses simulated devices so the agent's safety and failure behavior can be reproduced consistently. It does **not** claim a production smart-home deployment.
+The public demo remains simulation-first so the agent's safety and failure behavior can be reproduced consistently. It does **not** claim a production smart-home deployment.
 
-A useful next engineering step would be one real, low-risk device integration such as a light or outlet status/action path while preserving door-lock behavior as read-only or approval-gated.
+A narrow SwitchBot outlet adapter is being evaluated as the first real-provider path. It uses SwitchBot OpenAPI v1.1 signed requests and is intentionally limited to:
+
+- read one configured outlet's status
+- do nothing when the outlet is already off
+- issue only the low-risk `turnOff` command when the outlet is explicitly reported on
+- block the action when the power state is missing or unsupported
+- expose credential, transport, provider, and action failures in an audit result
+- never interact with locks or access controls
+
+Required environment variables:
+
+```bash
+export SWITCHBOT_TOKEN="..."
+export SWITCHBOT_SECRET="..."
+export SWITCHBOT_OUTLET_DEVICE_ID="..."
+```
+
+Never commit these values. Run the provider path explicitly:
+
+```bash
+PYTHONPATH=src python -m homeops_agent.cli --live-switchbot-outlet
+```
+
+Missing credentials fail closed and do not send a provider request. Until a credentialed physical-device run is captured, this adapter should be described as **implemented and mock-tested**, not as a validated real-home deployment.
+
+Official provider contract: SwitchBot API v1.1 uses HMAC-SHA256-signed requests to `https://api.switch-bot.com`; physical device status is read from `GET /v1.1/devices/{deviceId}/status`, and control commands use `POST /v1.1/devices/{deviceId}/commands`.
 
 ## Design Decisions
 
