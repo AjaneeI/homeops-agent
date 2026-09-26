@@ -29,13 +29,15 @@
   <text x="286" y="582" fill="#B98A54" font-size="14" font-weight="700" letter-spacing="1">SENSITIVE</text>
   <text x="286" y="620" fill="#F4E9DA" font-size="22" font-weight="700">Request</text>
   <text x="286" y="648" fill="#F4E9DA" font-size="22" font-weight="700">human review</text>
-  <text x="286" y="686" fill="#C9B59B" font-size="15">lock · access · uncertainty</text>
+  <text x="286" y="681" fill="#C9B59B" font-size="14">lock · access</text>
+  <text x="286" y="702" fill="#C9B59B" font-size="14">uncertainty</text>
 
   <rect x="480" y="544" width="196" height="172" rx="20" fill="#30231F" stroke="#A66855"/>
   <text x="504" y="582" fill="#A66855" font-size="14" font-weight="700" letter-spacing="1">FAILED / UNKNOWN</text>
   <text x="504" y="620" fill="#F4E9DA" font-size="22" font-weight="700">Leave</text>
   <text x="504" y="648" fill="#F4E9DA" font-size="22" font-weight="700">unchanged</text>
-  <text x="504" y="686" fill="#C4A59B" font-size="15">report instead of guessing</text>
+  <text x="504" y="681" fill="#C4A59B" font-size="14">report instead</text>
+  <text x="504" y="702" fill="#C4A59B" font-size="14">of guessing</text>
 
   <text x="360" y="764" text-anchor="middle" fill="#B66A45" font-size="26" font-weight="700">↓</text>
 

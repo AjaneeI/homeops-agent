@@ -14,7 +14,7 @@
 <text x="314" y="275" text-anchor="middle" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="650">human approval</text>
 <text x="66" y="322" fill="#82786F" font-family="Inter,system-ui,sans-serif" font-size="14">12 tests · Python 3.11 + 3.12 · Chromium scenario parity · audit trail</text>
 
-<g transform="translate(500 64)" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(610 70) scale(0.6)" stroke-linecap="round" stroke-linejoin="round">
   <path d="M28 92 L100 34 L172 92 V184 H28 Z" fill="none" stroke="#3C3732" stroke-width="3"/>
   <path d="M100 34 L100 10" stroke="#B66A45" stroke-width="3"/>
   <circle cx="100" cy="104" r="24" fill="#181613" stroke="#B66A45" stroke-width="2"/>
