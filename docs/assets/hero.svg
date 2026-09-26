@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+<title id="title">HomeOps Agent</title>
+<desc id="desc">HomeOps Agent automates low-risk smart-home routines while keeping safety-sensitive decisions under human control.</desc>
+<rect width="720" height="360" rx="24" fill="#0E0D0C"/>
+<rect x="36" y="34" width="6" height="292" rx="3" fill="#B66A45"/>
+<text x="66" y="66" fill="#B66A45" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" letter-spacing="1.8">HOMEOPS AGENT</text>
+<text x="66" y="122" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="37" font-weight="750">Routine work can be automatic.</text>
+<text x="66" y="170" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="37" font-weight="750">Risk stays human.</text>
+<text x="66" y="214" fill="#B1A598" font-family="Inter,system-ui,sans-serif" font-size="18">A safety-aware operations layer for everyday smart-home routines.</text>
+
+<rect x="66" y="250" width="154" height="38" rx="19" fill="#263126" stroke="#71856A"/>
+<text x="143" y="275" text-anchor="middle" fill="#E7ECD9" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="650">safe automation</text>
+<rect x="232" y="250" width="164" height="38" rx="19" fill="#31281F" stroke="#B98A54"/>
+<text x="314" y="275" text-anchor="middle" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="650">human approval</text>
+<text x="66" y="322" fill="#82786F" font-family="Inter,system-ui,sans-serif" font-size="14">12 tests · Python 3.11 + 3.12 · Chromium scenario parity · audit trail</text>
+
+<g transform="translate(500 64)" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M28 92 L100 34 L172 92 V184 H28 Z" fill="none" stroke="#3C3732" stroke-width="3"/>
+  <path d="M100 34 L100 10" stroke="#B66A45" stroke-width="3"/>
+  <circle cx="100" cy="104" r="24" fill="#181613" stroke="#B66A45" stroke-width="2"/>
+  <circle cx="100" cy="104" r="7" fill="#F4E9DA"/>
+  <path d="M100 128 V156 M100 156 H58 M100 156 H142" stroke="#71856A" stroke-width="3"/>
+  <circle cx="50" cy="156" r="10" fill="#71856A"/>
+  <circle cx="150" cy="156" r="10" fill="#B98A54"/>
+  <text x="50" y="184" text-anchor="middle" fill="#71856A" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="700">ACT</text>
+  <text x="150" y="184" text-anchor="middle" fill="#B98A54" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="700">ASK</text>
+</g>
+</svg>
