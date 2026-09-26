@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1080" viewBox="0 0 720 1080" role="img" aria-labelledby="title desc">
+<title id="title">HomeOps Agent safety architecture</title>
+<desc id="desc">The Good Night Check reads simulated device state, applies a deterministic safety policy, then either executes a low-risk action, requests human approval for a safety-sensitive condition, or leaves failed or unknown devices unchanged. Every path is recorded in an audit trail.</desc>
+<rect width="720" height="1080" rx="24" fill="#0E0D0C"/>
+<text x="44" y="62" fill="#B66A45" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="700" letter-spacing="2">SAFETY ARCHITECTURE</text>
+<text x="44" y="108" fill="#F4E9DA" font-family="Inter,system-ui,sans-serif" font-size="34" font-weight="750">Read first. Act only inside the boundary.</text>
+<text x="44" y="144" fill="#B1A598" font-family="Inter,system-ui,sans-serif" font-size="18">The policy separates routine convenience from safety-sensitive control.</text>
+
+<g font-family="Inter,system-ui,sans-serif">
+  <rect x="82" y="196" width="556" height="94" rx="20" fill="#181613" stroke="#3C3732"/>
+  <text x="112" y="236" fill="#F4E9DA" font-size="24" font-weight="700">1 · Read device state</text>
+  <text x="112" y="266" fill="#B1A598" font-size="17">get_device_state(device_id)</text>
+
+  <text x="360" y="330" text-anchor="middle" fill="#B66A45" font-size="26" font-weight="700">↓</text>
+
+  <rect x="82" y="354" width="556" height="104" rx="20" fill="#181613" stroke="#B66A45"/>
+  <text x="112" y="396" fill="#F4E9DA" font-size="24" font-weight="700">2 · Apply Good Night policy</text>
+  <text x="112" y="430" fill="#B1A598" font-size="17">What is safe to resolve without a person?</text>
+
+  <text x="44" y="520" fill="#82786F" font-size="14" font-weight="700" letter-spacing="1.4">THREE OUTCOMES</text>
+
+  <rect x="44" y="544" width="196" height="172" rx="20" fill="#263126" stroke="#71856A"/>
+  <text x="68" y="582" fill="#71856A" font-size="14" font-weight="700" letter-spacing="1">LOW RISK</text>
+  <text x="68" y="620" fill="#E7ECD9" font-size="22" font-weight="700">Execute</text>
+  <text x="68" y="648" fill="#E7ECD9" font-size="22" font-weight="700">safe action</text>
+  <text x="68" y="686" fill="#B8C1AB" font-size="15">dim light · outlet off</text>
+
+  <rect x="262" y="544" width="196" height="172" rx="20" fill="#31281F" stroke="#B98A54"/>
+  <text x="286" y="582" fill="#B98A54" font-size="14" font-weight="700" letter-spacing="1">SENSITIVE</text>
+  <text x="286" y="620" fill="#F4E9DA" font-size="22" font-weight="700">Request</text>
+  <text x="286" y="648" fill="#F4E9DA" font-size="22" font-weight="700">human review</text>
+  <text x="286" y="686" fill="#C9B59B" font-size="15">lock · access · uncertainty</text>
+
+  <rect x="480" y="544" width="196" height="172" rx="20" fill="#30231F" stroke="#A66855"/>
+  <text x="504" y="582" fill="#A66855" font-size="14" font-weight="700" letter-spacing="1">FAILED / UNKNOWN</text>
+  <text x="504" y="620" fill="#F4E9DA" font-size="22" font-weight="700">Leave</text>
+  <text x="504" y="648" fill="#F4E9DA" font-size="22" font-weight="700">unchanged</text>
+  <text x="504" y="686" fill="#C4A59B" font-size="15">report instead of guessing</text>
+
+  <text x="360" y="764" text-anchor="middle" fill="#B66A45" font-size="26" font-weight="700">↓</text>
+
+  <rect x="82" y="790" width="556" height="112" rx="20" fill="#181613" stroke="#3C3732"/>
+  <text x="112" y="834" fill="#F4E9DA" font-size="24" font-weight="700">3 · Write audit trail</text>
+  <text x="112" y="866" fill="#B1A598" font-size="17">state checks · actions · failures · approval requests</text>
+
+  <text x="44" y="960" fill="#82786F" font-size="14" font-weight="700" letter-spacing="1.4">CORE RULE</text>
+  <rect x="44" y="982" width="632" height="58" rx="17" fill="#7A2E3A" stroke="#B66A45"/>
+  <text x="360" y="1018" text-anchor="middle" fill="#F4E9DA" font-size="17" font-weight="700">The agent never unlocks doors automatically.</text>
+</g>
+</svg>
