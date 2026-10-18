@@ -80,7 +80,9 @@ The core separation is deliberate:
 
 The strongest invariant is simple: **HomeOps never unlocks a door automatically.**
 
-The deterministic policy lives in [`src/homeops_agent/agent.py`](src/homeops_agent/agent.py), and the tool/device layer lives in [`src/homeops_agent/tools.py`](src/homeops_agent/tools.py).
+The deterministic Good Night workflow remains in [`src/homeops_agent/agent.py`](src/homeops_agent/agent.py). Its action calls and the Strands `execute_safe_action` tool now share a **host-enforced permission boundary** in [`src/homeops_agent/tools.py`](src/homeops_agent/tools.py), evaluated by [`permission_boundary.py`](src/homeops_agent/permission_boundary.py). Only three exact low-risk device/action pairs can reach the simulated mutator. Door-lock actions require human review and cannot execute through the agent tool, even when the caller claims approval. The trusted host writes a separate in-memory enforcement log that an agent-written audit entry cannot modify.
+
+See [the integration and threat-model notes](docs/permission-boundary-integration.md) for reproducible tests, limitations, and why this is **not** an ACS integration or an OS-level sandbox.
 
 ## Four deterministic scenarios
 

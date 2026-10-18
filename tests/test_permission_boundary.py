@@ -171,3 +171,10 @@ def test_unknown_policy_verdict_fails_closed(model_tools, monkeypatch):
         result = exposed["execute_safe_action"]("bedside-bulb", "dim_to_20")
     assert result["decision"] == "deny"
     assert effect.call_count == 0
+
+
+def test_real_strands_decorator_registration_when_installed():
+    """With the pinned SDK installed, verify tool registration without model calls."""
+    pytest.importorskip("strands")
+    state = scenario_state("fix-needed")
+    assert len(build_strands_tools(state)) == 4
