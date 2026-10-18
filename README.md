@@ -55,9 +55,9 @@ The public implementation is intentionally **bounded and reproducible**. It demo
 
 | Signal | Verified state |
 | --- | --- |
-| Python tests | **37 passing** ([PR #22 branch run](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292)) |
+| Python tests | **37 passing** (Python 3.11/3.12; [reviewed implementation run](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292)) |
 | Python matrix | **3.11 and 3.12** |
-| CI | Latest `main` Python workflow passes; [PR #22 branch CI](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292) passes on 3.11/3.12 |
+| CI | [Python test workflow](https://github.com/AjaneeI/homeops-agent/actions/workflows/tests.yml) checks PRs and `main`; [reviewed implementation CI](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292) passed on 3.11/3.12 |
 | Browser verification | Chromium scenario-parity workflow completed successfully |
 | Device layer | Deterministic simulated devices |
 | Safety boundary | Lock/access changes are approval-gated |
@@ -121,14 +121,14 @@ These contracts are intentionally small. The Strands adapter exposes the same bo
 
 ### Automated Python proof
 
-The [permission-boundary PR #22 branch workflow](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292) passes the suite on Python 3.11 and 3.12:
+The [reviewed permission-boundary implementation (commit `85f9810`)](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292) passed the suite on Python 3.11 and 3.12:
 
 ```text
 37 passed (Python 3.11)
 37 passed (Python 3.12)
 ```
 
-These results are **branch/PR evidence**, not yet merged into `main`.
+These results are pinned to the reviewed implementation. See [PR #22](https://github.com/AjaneeI/homeops-agent/pull/22) for its merge status and subsequent checks.
 
 Coverage includes:
 
