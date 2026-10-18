@@ -55,9 +55,9 @@ The public implementation is intentionally **bounded and reproducible**. It demo
 
 | Signal | Verified state |
 | --- | --- |
-| Python tests | **12 passing** |
+| Python tests | **37 passing** (Python 3.11/3.12; [reviewed implementation run](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292)) |
 | Python matrix | **3.11 and 3.12** |
-| Main CI | Latest Python workflow on `main` passes |
+| CI | [Python test workflow](https://github.com/AjaneeI/homeops-agent/actions/workflows/tests.yml) checks PRs and `main`; [reviewed implementation CI](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292) passed on 3.11/3.12 |
 | Browser verification | Chromium scenario-parity workflow completed successfully |
 | Device layer | Deterministic simulated devices |
 | Safety boundary | Lock/access changes are approval-gated |
@@ -80,7 +80,9 @@ The core separation is deliberate:
 
 The strongest invariant is simple: **HomeOps never unlocks a door automatically.**
 
-The deterministic policy lives in [`src/homeops_agent/agent.py`](src/homeops_agent/agent.py), and the tool/device layer lives in [`src/homeops_agent/tools.py`](src/homeops_agent/tools.py).
+The deterministic Good Night workflow remains in [`src/homeops_agent/agent.py`](src/homeops_agent/agent.py). Its action calls and the Strands `execute_safe_action` tool now share a **host-enforced permission boundary** in [`src/homeops_agent/tools.py`](src/homeops_agent/tools.py), evaluated by [`permission_boundary.py`](src/homeops_agent/permission_boundary.py). Only three exact low-risk device/action pairs can reach the simulated mutator. Door-lock actions require human review and cannot execute through the agent tool, even when the caller claims approval. The trusted host writes a separate in-memory enforcement log that an agent-written audit entry cannot modify.
+
+See [the integration and threat-model notes](docs/permission-boundary-integration.md) for reproducible tests, limitations, and why this is **not** an ACS integration or an OS-level sandbox.
 
 ## Four deterministic scenarios
 
@@ -119,11 +121,14 @@ These contracts are intentionally small. The Strands adapter exposes the same bo
 
 ### Automated Python proof
 
-The latest verified `main` workflow runs the suite on Python 3.11 and 3.12:
+The [reviewed permission-boundary implementation (commit `85f9810`)](https://github.com/AjaneeI/homeops-agent/actions/runs/39088763292) passed the suite on Python 3.11 and 3.12:
 
 ```text
-12 passed
+37 passed (Python 3.11)
+37 passed (Python 3.12)
 ```
+
+These results are pinned to the reviewed implementation. See [PR #22](https://github.com/AjaneeI/homeops-agent/pull/22) for its merge status and subsequent checks.
 
 Coverage includes:
 
@@ -131,6 +136,8 @@ Coverage includes:
 - uncertain lock state requires human approval
 - failed device actions do not mutate failed device state
 - cross-scenario policy invariants
+- host-owned allow/deny/approval-required decisions at the Strands-facing action path
+- prohibited requests never invoking the simulated action mutator
 
 ### Browser scenario parity
 
@@ -231,15 +238,18 @@ npm run test:web
 │   ├── assets/              # portfolio-facing visual system
 │   ├── agentcore-deployment-plan.md
 │   ├── architecture.md
-│   └── judging-map.md
+│   ├── judging-map.md
+│   └── permission-boundary-integration.md
 ├── src/homeops_agent/
 │   ├── agent.py             # deterministic Good Night policy
-│   ├── tools.py             # simulated devices + tool boundary
+│   ├── tools.py             # simulated devices + guarded action execution
+│   ├── permission_boundary.py # host-owned exact policy
 │   ├── strands_adapter.py   # Strands Agent / @tool integration
 │   └── cli.py
 ├── tests/
 │   ├── test_agent.py
 │   ├── test_policy_invariants.py
+│   ├── test_permission_boundary.py
 │   └── web-smoke.spec.js
 ├── web/                     # interactive static dashboard
 ├── BUILD_LOG.md
