@@ -55,9 +55,9 @@ The public implementation is intentionally **bounded and reproducible**. It demo
 
 | Signal | Verified state |
 | --- | --- |
-| Python tests | **12 passing** |
+| Python tests | **37 passing** ([PR #22 branch run](https://github.com/AjaneeI/homeops-agent/actions/runs/39088377804)) |
 | Python matrix | **3.11 and 3.12** |
-| Main CI | Latest Python workflow on `main` passes |
+| CI | Latest `main` Python workflow passes; [PR #22 branch CI](https://github.com/AjaneeI/homeops-agent/actions/runs/39088377804) passes on 3.11/3.12 |
 | Browser verification | Chromium scenario-parity workflow completed successfully |
 | Device layer | Deterministic simulated devices |
 | Safety boundary | Lock/access changes are approval-gated |
@@ -121,11 +121,14 @@ These contracts are intentionally small. The Strands adapter exposes the same bo
 
 ### Automated Python proof
 
-The latest verified `main` workflow runs the suite on Python 3.11 and 3.12:
+The [permission-boundary PR #22 branch workflow](https://github.com/AjaneeI/homeops-agent/actions/runs/39088377804) passes the suite on Python 3.11 and 3.12:
 
 ```text
-12 passed
+37 passed (Python 3.11)
+37 passed (Python 3.12)
 ```
+
+These results are **branch/PR evidence**, not yet merged into `main`.
 
 Coverage includes:
 
@@ -133,6 +136,8 @@ Coverage includes:
 - uncertain lock state requires human approval
 - failed device actions do not mutate failed device state
 - cross-scenario policy invariants
+- host-owned allow/deny/approval-required decisions at the Strands-facing action path
+- prohibited requests never invoking the simulated action mutator
 
 ### Browser scenario parity
 
@@ -233,15 +238,18 @@ npm run test:web
 │   ├── assets/              # portfolio-facing visual system
 │   ├── agentcore-deployment-plan.md
 │   ├── architecture.md
-│   └── judging-map.md
+│   ├── judging-map.md
+│   └── permission-boundary-integration.md
 ├── src/homeops_agent/
 │   ├── agent.py             # deterministic Good Night policy
-│   ├── tools.py             # simulated devices + tool boundary
+│   ├── tools.py             # simulated devices + guarded action execution
+│   ├── permission_boundary.py # host-owned exact policy
 │   ├── strands_adapter.py   # Strands Agent / @tool integration
 │   └── cli.py
 ├── tests/
 │   ├── test_agent.py
 │   ├── test_policy_invariants.py
+│   ├── test_permission_boundary.py
 │   └── web-smoke.spec.js
 ├── web/                     # interactive static dashboard
 ├── BUILD_LOG.md
